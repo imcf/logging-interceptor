@@ -29,6 +29,23 @@ class InterceptHandler(logging.Handler):
 
 
 def setup_loguru_interceptor(level=logging.DEBUG, modules=(), force=True):
+    """Set up an interceptor routing messages to Loguru.
+
+    Parameters
+    ----------
+    level : int, optional
+        The log level (as defined by Python's standard `logging`). Messages with this
+        level or above will be forwarded to Loguru. By default `logging.DEBUG`.
+    modules : tuple, optional
+        A list of module names whose `logging` messages should be intercepted, by
+        default ().
+    force : bool, optional
+        Passed on to the `logging.basicConfig()` call, by default True.
+
+    Example
+    -------
+    >>> setup_loguru_interceptor(modules=("foo", "foo.bar", "foo.baz"))
+    """
     logging.basicConfig(handlers=[InterceptHandler()], level=level, force=force)
     for logger_name in chain(("",), modules):
         mod_logger = logging.getLogger(logger_name)
