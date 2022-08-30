@@ -5,6 +5,6 @@
 .. include:: ../../README.md
 """
 
-__version__ = "0.1.1-dev0"
+__version__ = "0.1.2-dev0"
 
 from .loguru import setup_loguru_interceptor
