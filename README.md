@@ -37,3 +37,4 @@ pip3 install logging-interceptor
 ```
 
 [r1]: https://github.com/MatthewScholefield/loguru-logging-intercept
+[r2]: https://github.com/Delgan/loguru
