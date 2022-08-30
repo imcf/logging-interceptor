@@ -1,5 +1,5 @@
 [tool.poetry]
-version = "0.1.0-dev1"
+version = "0.1.0"
 
 authors = [
   "Matthew D. Scholefield <matthew331199@gmail.com>",
