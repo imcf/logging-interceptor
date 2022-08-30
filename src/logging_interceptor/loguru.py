@@ -8,7 +8,8 @@ from loguru import logger
 
 
 class InterceptHandler(logging.Handler):
-    """Logs to loguru from Python logging module"""
+
+    """Handler to route messages from Python logging module to loguru."""
 
     def emit(self, record: logging.LogRecord) -> None:
         try:
@@ -17,20 +18,18 @@ class InterceptHandler(logging.Handler):
             level = str(record.levelno)
 
         frame, depth = logging.currentframe(), 2
-        while frame.f_code.co_filename == logging.__file__:  # noqa: WPS609
+        while frame.f_code.co_filename == logging.__file__:
             frame = cast(FrameType, frame.f_back)
             depth += 1
 
         logger.opt(depth=depth, exception=record.exc_info).log(
-            level,
-            record.getMessage(),
+            level=level,
+            message=record.getMessage(),
         )
 
 
-def setup_loguru_logging_intercept(
-    level=logging.DEBUG, modules=()
-):
-    logging.basicConfig(handlers=[InterceptHandler()], level=level)  # noqa
+def setup_loguru_interceptor(level=logging.DEBUG, modules=(), force=True):
+    logging.basicConfig(handlers=[InterceptHandler()], level=level, force=force)
     for logger_name in chain(("",), modules):
         mod_logger = logging.getLogger(logger_name)
         mod_logger.handlers = [InterceptHandler(level=level)]
